@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Description Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+  <!-- Full-width header -->
+  <header id="header">
+      <div class="header-container">
+          <img src="./static/image1.png" alt="Image 1" style="margin-left:20px">
+          <img src="./static/image2.png" alt="Image 2" style="width:150px;height:120px">
+          <img src="./static/image3.png" alt="Image 3" style="margin-right:20px;height:120px ">
+      </div>
+  </header>
+
+  <!-- Form container below the header -->
+  <div class="container">
+      <h1>Generate Job Description</h1>
+      
+      <form id="jobForm">
+          <input type="text" id="roleName" name="roleName" placeholder="Role Name (e.g., Software Engineer)" required>
+          <textarea id="roleRequirements" name="roleRequirements" placeholder="Role Requirements (e.g., 3+ years of experience in React)" required></textarea>
+          <textarea id="companyValues" name="companyValues" placeholder="Company Values (e.g., Innovation, Integrity)" required></textarea>
+          <button type="submit">Generate Job Description</button>
+      </form>
+
+      <div class="output">
+          <h3>Generated Job Description:</h3>
+          <p id="generatedDescription">Your generated job description will appear here...</p>
+          <div id="loading" class="loading-animation">Generating...</div>
+          <button id="resetButton" style="display: none; margin-top: 15px;" onclick="resetForm()">Reset</button>
+      </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+      <div class="footer-content">
+          <p>Powered by <strong>iVis Labs</strong> &copy; 2025</p>
+      </div>
+  </footer>
+
+  <script>
+      document.getElementById('jobForm').addEventListener('submit', async function(e) {
+          e.preventDefault();
+
+          // Get the form data
+          const roleName = document.getElementById('roleName').value;
+          const roleRequirements = document.getElementById('roleRequirements').value;
+          const companyValues = document.getElementById('companyValues').value;
+
+          // Show loading animation
+          document.getElementById('loading').style.display = 'block';
+          document.getElementById('generatedDescription').innerText = "";
+
+          // Prepare the data to send
+          const formData = new FormData();
+          formData.append('roleName', roleName);
+          formData.append('roleRequirements', roleRequirements);
+          formData.append('companyValues', companyValues);
+
+          // Send data to the backend
+          const response = await fetch('/generate-job-description', {
+              method: 'POST',
+              body: formData
+          });
+
+          const data = await response.json();
+
+          let cleanedDescription = data.jobDescription
+          .replace(/\*\*/g, ' ')  // Replace ** with space
+          .replace(/[*#]/g, '• ');
+
+          // Hide loading animation and display cleaned result
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('generatedDescription').innerText = cleanedDescription;
+          document.getElementById('resetButton').style.display = "block";
+      });
+
+      function resetForm() {
+          document.getElementById('jobForm').reset();
+          document.getElementById('generatedDescription').innerText = "";
+          document.getElementById('resetButton').style.display = "none"; // Hide reset button after reset
+      }
+  </script>
+
+</body>
+</html>
