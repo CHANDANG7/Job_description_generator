@@ -8,7 +8,7 @@ app = Flask(__name__)
 # Configuration for open-webui API
 WEBUI_ENABLED = True  # Set to use open-webui API
 WEBUI_BASE_URL = "https://chat.ivislabs.in/api"
-API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE1Y2ViODIxLWMzOWUtNGExOC04MDYyLWU0NzMyZmQwZmUxNSJ9.Mcb96NtRhidWsKR_l92iIR7XpuTagERfL5R0c_JSKpI"  # Replace with your actual API key if needed
+API_KEY = "YOUR_API_KEY"  # Replace with your actual API key if needed
 DEFAULT_MODEL = "gemma2:2b"  # Update to one of the available models
 
 # Fallback to local Ollama API if needed

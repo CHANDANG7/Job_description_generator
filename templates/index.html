@@ -11,9 +11,9 @@
   <!-- Full-width header -->
   <header id="header">
       <div class="header-container">
-          <img src="./static/image1.png" alt="Image 1" style="margin-left:20px">
-          <img src="./static/image2.png" alt="Image 2" style="width:150px;height:120px">
-          <img src="./static/image3.png" alt="Image 3" style="margin-right:20px;height:120px ">
+          <img src="{{ url_for('static', filename='image1.png') }}" alt="Image 1" style="margin-left:20px">
+          <img src="{{ url_for('static', filename='image2.png') }}" alt="Image 2" style="width:150px;height:120px">
+          <img src="{{ url_for('static', filename='image3.png') }}" alt="Image 3" style="margin-right:20px;height:120px">
       </div>
   </header>
 
@@ -31,8 +31,15 @@
       <div class="output">
           <h3>Generated Job Description:</h3>
           <p id="generatedDescription">Your generated job description will appear here...</p>
-          <div id="loading" class="loading-animation">Generating...</div>
-          <button id="resetButton" style="display: none; margin-top: 15px;" onclick="resetForm()">Reset</button>
+          <div id="loading" class="loading-animation" style="display: none;">Generating...</div>
+          
+          <!-- Reset and Copy Buttons -->
+          <div class="button-container">
+              <button id="resetButton" style="display: none; margin-top: 15px;" onclick="resetForm()">Reset</button>
+             <!-- Copy Button -->
+             <button id="copyButton" style="display: none; margin-top: 15px; margin:auto;" onclick="copyToClipboard()">Copy</button>
+
+          </div>
       </div>
   </div>
 
@@ -77,13 +84,30 @@
           // Hide loading animation and display cleaned result
           document.getElementById('loading').style.display = 'none';
           document.getElementById('generatedDescription').innerText = cleanedDescription;
+          
+          // Show buttons
           document.getElementById('resetButton').style.display = "block";
+          document.getElementById('copyButton').style.display = "block";
       });
 
       function resetForm() {
           document.getElementById('jobForm').reset();
           document.getElementById('generatedDescription').innerText = "";
           document.getElementById('resetButton').style.display = "none"; // Hide reset button after reset
+          document.getElementById('copyButton').style.display = "none"; // Hide copy button after reset
+      }
+
+      function copyToClipboard() {
+          const text = document.getElementById('generatedDescription').innerText;
+          navigator.clipboard.writeText(text).then(() => {
+              const copyButton = document.getElementById('copyButton');
+              copyButton.innerText = "Copied!";
+              setTimeout(() => {
+                  copyButton.innerText = "Copy";
+              }, 2000);
+          }).catch(err => {
+              console.error("Failed to copy text: ", err);
+          });
       }
   </script>
 

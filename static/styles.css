@@ -1,11 +1,14 @@
 /* Global Styles */
 body {
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #f0f2f5, #ffffff);
-  /* display: flex; */
+  background-image: url("{{ url_for('static', filename='image4.jpg') }}");
+  background-size: cover; /* Ensures the image covers the entire background */
+  background-position: center; /* Centers the background image */
+  background-attachment: fixed; /* Keeps the image fixed while scrolling */
+  background-repeat: no-repeat; /* Prevents repeating the image */
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 100vh;
   margin: 0;
   color: #333;
   text-align: center;
@@ -23,32 +26,28 @@ body {
 
 .header-container {
   display: flex;
-  justify-content: space-evenly; /* Ensures the images are spaced evenly */
-  align-items: center;     
-  margin: 2px;        /* Aligns images vertically centered */
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 2px;
   padding: 2px;
-  gap: 40px;  /* Adds space between images */
+  gap: 40px;
 }
 
 .header-container img {
-  width: 100px; /* Adjust size as needed */
+  width: 100px;
   height: auto;
-  margin-left: 60px;
-  margin-right: 60px;
+  margin: 0 60px;
   padding: 2px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  background: none; /* Ensures no background color on the image */
 }
 
 /* 3D Container */
 .container {
   width: 45%;
   max-width: 600px;
-  background: #ffffff;
   padding: 30px;
-  margin: auto;
-  margin-top: 30px;
+  margin: 30px auto 0;
   border-radius: 20px;
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -77,7 +76,6 @@ input:focus, textarea:focus {
   outline: none;
   border-color: #4CAF50;
   box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
-  transition: box-shadow 0.3s ease-in-out;
 }
 
 /* 3D Button */
@@ -143,8 +141,8 @@ footer {
   padding: 15px 0;
   text-align: center;
   width: 100%;
-  position: relative; /* Change fixed to relative */
-  margin-top: 20px; /* Ensure space between content and footer */
+  position: relative;
+  margin-top: 20px;
 }
 
 .footer-content p {
@@ -172,14 +170,42 @@ footer {
   }
 }
 
+/* Reset Button */
 #resetButton {
   background: #dc3545;
   margin-top: 15px;
   width: 60%;
   margin: auto;
-  display: none; /* Hidden initially */
+  display: none;
 }
 
 #resetButton:hover {
   background: #c82333;
+}
+
+/* Copy Button */
+#copyButton {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  width: 60%;
+  padding: 10px 15px;
+  margin-top: 15px; /* Corrected margin-top */
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#copyButton:hover {
+  background-color: #45a049;
+}
+
+#copyButton:active {
+  transform: scale(0.95);
+}
+
+/* Styling when text is copied */
+#copyButton.copied {
+  background-color: #34583c;
 }
